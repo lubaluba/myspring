@@ -32,11 +32,11 @@ public class XmlBeanDefinitionReader {
 	
 	public static final String REF_ATTRUBUTE = "ref";
 	
-	public static final String Property_ATTRUBUTE = "property";
+	public static final String PROPERTY_ATTRUBUTE = "property";
 	
 	public static final String VALUE_ATTRUBUTE = "value";
 	
-	public static final String Name_ATTRUBUTE = "name"; 
+	public static final String NAME_ATTRUBUTE = "name"; 
 	
 	BeanDefinitionRegisty registy;
 	
@@ -68,11 +68,12 @@ public class XmlBeanDefinitionReader {
 			throw new BeanDefinitionStoreException("IOException paraing XML, document exception");
 		}
 	}
+	//解析<property>创建PropertyValue并设置BeanDefition的list<PropertyValue>
 	public void parsePropertyElement(Element beanElement, BeanDefinition bd) {
-		Iterator<Element> iterator = beanElement.elementIterator(Property_ATTRUBUTE);
+		Iterator<Element> iterator = beanElement.elementIterator(PROPERTY_ATTRUBUTE);
 		while(iterator.hasNext()) {
 			Element propEle = iterator.next();
-			String propertyName = propEle.attributeValue(Name_ATTRUBUTE);
+			String propertyName = propEle.attributeValue(NAME_ATTRUBUTE);
 			if(!StringUtils.hasLength(propertyName)) {
 				logger.fatal("Tag 'property' must hava a 'name' attribute");
 				return;

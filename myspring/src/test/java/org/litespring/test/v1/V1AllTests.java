@@ -10,6 +10,6 @@ import org.junit.runners.Suite.SuiteClasses;
 	BeamFactoryTest.class,
 	ResourceTest.class
 	})
-public class AllTests {
+public class V1AllTests {
 
 }

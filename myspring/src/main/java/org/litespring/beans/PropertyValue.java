@@ -1,5 +1,12 @@
 package org.litespring.beans;
-
+/**
+ * 	@author a3325
+ *	spring的xml配置中的每一个<property>属性都会被转换为一个PropertyValue对象
+ *	解析完成后,创建bean时,就从BeanDefinition取出转换为实例
+ *	name分别代表property的naem
+ *	value代表property的值,主要有RuntimeBeanReference(依赖其他bean),
+ *		TypedStringValue(String类型)等
+ */
 public class PropertyValue {
 	
 	private final String name;

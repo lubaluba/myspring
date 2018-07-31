@@ -1,9 +1,16 @@
 package org.litespring.beans.factory.impl; 
+import java.beans.BeanInfo;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 import org.litespring.beans.BeanDefinition;
+import org.litespring.beans.PropertyValue;
 import org.litespring.beans.factory.config.ConfigurableBeanFactory;
+import org.litespring.beans.impl.BeanDefinitionValueResolver;
+import org.litespring.beans.impl.SimpleTypeConverter;
 import org.litespring.exception.BeanCreationException;
 import org.litespring.utils.ClassUtils;
 /**
@@ -20,11 +27,11 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
 	@Override
 	public Object getBean(String beanId) {
 		BeanDefinition bd  = this.getBeanDefinition(beanId);
-		if(bd == null) {
+		if (bd == null) {
 			throw new BeanCreationException("Bean Definition does not exist");
 		}
 		
-		if(bd.isSingleton()) {
+		if (bd.isSingleton()) {
 			Object bean = this.getSingleton(beanId);
 			if(bean == null) {
 				bean = createBean(bd);
@@ -35,7 +42,15 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
 		return createBean(bd);
 	}
 	
-	public Object createBean(BeanDefinition bd) {
+	private Object createBean(BeanDefinition bd) {
+		//创建实例
+		Object bean = instantiateBean(bd);
+		//设置属性	
+		populateBean(bd, bean);
+		
+		return bean;
+	}
+	private Object instantiateBean(BeanDefinition bd) {
 		ClassLoader cl = this.getBeanClassLoader();
 		String beanClassName = bd.getBeanClassName();
 		try {
@@ -43,6 +58,37 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
 			return clazz.newInstance();
 		} catch (Exception e) {
 			throw new BeanCreationException("create bean for " + beanClassName + " failed",e);
+		}
+	}
+	protected void populateBean(BeanDefinition bd, Object bean) {
+		List<PropertyValue> pvlist = bd.getPropertyValues();
+		
+		if (pvlist == null || pvlist.isEmpty()) {
+			return;
+		}
+		
+		BeanDefinitionValueResolver vauleResolver = new BeanDefinitionValueResolver(this);
+		SimpleTypeConverter converter = new SimpleTypeConverter();
+		
+		try {
+			for (PropertyValue pv : pvlist) {
+				String propertyName = pv.getName();
+				Object originalValue = pv.getValue();
+				Object resolvedValue = vauleResolver.resolverValueIfNecessary(originalValue);
+				//通过javaBean提供的方法来执行bean的setter方法,来完成set注入
+				BeanInfo beanInfo = Introspector.getBeanInfo(bean.getClass());
+				PropertyDescriptor[] pds = beanInfo.getPropertyDescriptors();
+				for(PropertyDescriptor pd : pds) {
+					if(pd.getName().equals(propertyName)) {
+						Object convertedValue = converter.convertIfNecessary(resolvedValue, pd.getPropertyType());
+						//pd.getWriteMethod().invoke(bean, resolvedValue);
+						pd.getWriteMethod().invoke(bean, convertedValue);
+						break;
+					}
+				}
+ 			}
+		}catch(Exception e) {
+			throw new BeanCreationException("Failed to obtain BeanInfo for class [" + bd.getBeanClassName() + "]");
 		}
 	}
 	

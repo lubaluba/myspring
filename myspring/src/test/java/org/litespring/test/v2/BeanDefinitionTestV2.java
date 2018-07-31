@@ -25,7 +25,7 @@ public class BeanDefinitionTestV2 {
 		
 		List<PropertyValue> pvs = bd.getPropertyValues();
 		
-		assertTrue(pvs.size() == 2);
+		assertTrue(pvs.size() == 5);
 		
 		PropertyValue pv = this.getPropertyValues("accountDao", pvs);
 		assertNotNull(pv);
