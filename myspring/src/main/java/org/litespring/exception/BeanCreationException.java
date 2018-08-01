@@ -1,6 +1,6 @@
 package org.litespring.exception;
 
-public class BeanCreationException extends BeansException{
+public class BeanCreationException extends BeansException {
 
 	private static final long serialVersionUID = 1L;
 

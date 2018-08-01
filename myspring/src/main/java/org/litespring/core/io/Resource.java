@@ -8,6 +8,6 @@ import java.io.InputStream;
  *	getInputStream():无论我们从哪里获取的资源,我们都应当有方法去获得InputStream去读资源
  */
 public interface Resource {
-	public InputStream getInputStream() throws IOException;
-	public String getDescription();
+	InputStream getInputStream() throws IOException;
+	String getDescription();
 }

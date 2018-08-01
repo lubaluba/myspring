@@ -6,7 +6,7 @@ import org.litespring.context.ApplicationContext;
 import org.litespring.core.io.Resource;
 import org.litespring.utils.ClassUtils;
 
-public abstract class AbstractApplicationContext implements ApplicationContext{
+public abstract class AbstractApplicationContext implements ApplicationContext {
 	
 	private DefaultBeanFactory factory = null;
 	private ClassLoader beanClassLoader;
@@ -20,6 +20,7 @@ public abstract class AbstractApplicationContext implements ApplicationContext{
 	}
 	
 	protected abstract Resource getResource(String path);
+	
 	@Override
 	public Object getBean(String BeanId) {
 		return factory.getBean(BeanId);

@@ -78,8 +78,8 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
 				//通过javaBean提供的方法来执行bean的setter方法,来完成set注入
 				BeanInfo beanInfo = Introspector.getBeanInfo(bean.getClass());
 				PropertyDescriptor[] pds = beanInfo.getPropertyDescriptors();
-				for(PropertyDescriptor pd : pds) {
-					if(pd.getName().equals(propertyName)) {
+				for (PropertyDescriptor pd : pds) {
+					if (pd.getName().equals(propertyName)) {
 						Object convertedValue = converter.convertIfNecessary(resolvedValue, pd.getPropertyType());
 						//pd.getWriteMethod().invoke(bean, resolvedValue);
 						pd.getWriteMethod().invoke(bean, convertedValue);
@@ -87,7 +87,7 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
 					}
 				}
  			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			throw new BeanCreationException("Failed to obtain BeanInfo for class [" + bd.getBeanClassName() + "]");
 		}
 	}

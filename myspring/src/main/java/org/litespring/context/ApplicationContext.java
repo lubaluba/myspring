@@ -6,4 +6,5 @@ import org.litespring.beans.factory.config.ConfigurableBeanFactory;
  *	继承了BeanFactory,获得其getBean方法
  */
 public interface ApplicationContext extends ConfigurableBeanFactory{
+	
 }

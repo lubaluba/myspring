@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.litespring.beans.BeanDefinition;
 import org.litespring.beans.PropertyValue;
-public class GenericBeanDefinition implements BeanDefinition{
+public class GenericBeanDefinition implements BeanDefinition {
 	
 	private String id; 
 	private String beanClassName;
@@ -13,7 +13,7 @@ public class GenericBeanDefinition implements BeanDefinition{
 	private boolean prototype = false;
 	private String scope = SCOPE_DEFAULT;
 	
-	List<PropertyValue> propertyValues = new ArrayList<>();
+	private List<PropertyValue> propertyValues = new ArrayList<>();
 	
 	public GenericBeanDefinition(String id, String beanClassName) {
 		this.id = id;

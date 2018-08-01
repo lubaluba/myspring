@@ -11,16 +11,17 @@ import java.util.List;
  */
 public interface BeanDefinition {
 	
-	public static final String SCOPE_SINGLETON = "singleton";
-	public static final String SCOPE_PROTOTYPE = "prototype";
-	public static final String SCOPE_DEFAULT = "";
+	String SCOPE_SINGLETON = "singleton";
+	String SCOPE_PROTOTYPE = "prototype";
+	String SCOPE_DEFAULT = "";
 	
-	public boolean isSingleton();
-	public boolean isPrototype();
+	boolean isSingleton();
+	boolean isPrototype();
+	
 	String getScope();
 	void setScope(String scope);
 	
 	String getBeanClassName();
 	 
-	public List<PropertyValue> getPropertyValues();
+	List<PropertyValue> getPropertyValues();
 }

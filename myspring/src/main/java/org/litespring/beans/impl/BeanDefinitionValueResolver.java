@@ -14,16 +14,16 @@ public class BeanDefinitionValueResolver {
 	public BeanDefinitionValueResolver(DefaultBeanFactory beanFactory) {
 		this.beanFactory = beanFactory;
 	}
+	
 	public Object resolverValueIfNecessary(Object value) {
-		
-		if(value instanceof RuntimeBeanReference) {
+		if (value instanceof RuntimeBeanReference) {
 			RuntimeBeanReference ref = (RuntimeBeanReference)value;
 			String refName = ref.getBeanName();
 			Object bean = beanFactory.getBean(refName);
 			return bean;
-		}else if(value instanceof TypedStringValue) {
+		} else if (value instanceof TypedStringValue) {
 			return ((TypedStringValue)value).getValue();
-		}else {
+		} else {
 			throw new RuntimeException("the value " + value + " has not implemented");
 		}
 	}

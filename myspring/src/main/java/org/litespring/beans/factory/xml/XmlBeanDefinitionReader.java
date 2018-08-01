@@ -38,7 +38,7 @@ public class XmlBeanDefinitionReader {
 	
 	public static final String NAME_ATTRUBUTE = "name"; 
 	
-	BeanDefinitionRegisty registy;
+	private BeanDefinitionRegisty registy;
 	
 	protected final Log logger = LogFactory.getLog(getClass());
 	
@@ -46,13 +46,13 @@ public class XmlBeanDefinitionReader {
 		this.registy = registy;
 	}
 	public void loadBeanDefinitions(Resource r) {
-		try(InputStream in = r.getInputStream()){
+		try (InputStream in = r.getInputStream()) {
 			
 			SAXReader reader = new SAXReader();
 			Document doc = reader.read(in);
 			Element root  = doc.getRootElement();
 			Iterator<Element> iter = root.elementIterator();
-			while(iter.hasNext()) {
+			while (iter.hasNext()) {
 				Element ele  = iter.next();
 				String id = ele.attributeValue(ID_ATTRIBUTE);
 				String beanClassName = ele.attributeValue(CLASS_ATTRIBUTE);
@@ -71,10 +71,10 @@ public class XmlBeanDefinitionReader {
 	//解析<property>创建PropertyValue并设置BeanDefition的list<PropertyValue>
 	public void parsePropertyElement(Element beanElement, BeanDefinition bd) {
 		Iterator<Element> iterator = beanElement.elementIterator(PROPERTY_ATTRUBUTE);
-		while(iterator.hasNext()) {
+		while (iterator.hasNext()) {
 			Element propEle = iterator.next();
 			String propertyName = propEle.attributeValue(NAME_ATTRUBUTE);
-			if(!StringUtils.hasLength(propertyName)) {
+			if (!StringUtils.hasLength(propertyName)) {
 				logger.fatal("Tag 'property' must hava a 'name' attribute");
 				return;
 			}
@@ -92,20 +92,21 @@ public class XmlBeanDefinitionReader {
 		boolean hasRefAttribute = (ele.attribute(REF_ATTRUBUTE) != null);
 		boolean hasValueAttrubute = (ele.attribute(VALUE_ATTRUBUTE) != null);
 		
-		if(hasRefAttribute) {
+		if (hasRefAttribute) {
 			String refName = ele.attributeValue(REF_ATTRUBUTE);
-			if(!StringUtils.hasText(refName)) {
+			if (!StringUtils.hasText(refName)) {
 				logger.error(elementName + " contains empty 'ref' attribute");
 			}
 			RuntimeBeanReference ref = new RuntimeBeanReference(refName);
 			return ref;
-		}else if(hasValueAttrubute) {
+		} else if (hasValueAttrubute) {
 			TypedStringValue valueHolder = new TypedStringValue(ele.attributeValue(VALUE_ATTRUBUTE));
 			return valueHolder;
-		}else {
+		} else {
 			throw new RuntimeException(elementName + "must specify a ref or a value");
 		}
 	}
+	
 	
 	
 }
