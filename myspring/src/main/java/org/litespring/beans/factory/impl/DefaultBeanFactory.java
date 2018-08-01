@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
+//import org.apache.commons.beanutils.BeanUtils;
 import org.litespring.beans.BeanDefinition;
 import org.litespring.beans.PropertyValue;
 import org.litespring.beans.factory.config.ConfigurableBeanFactory;
@@ -60,7 +61,7 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
 			throw new BeanCreationException("create bean for " + beanClassName + " failed",e);
 		}
 	}
-	protected void populateBean(BeanDefinition bd, Object bean) {
+	private void populateBean(BeanDefinition bd, Object bean) {
 		List<PropertyValue> pvlist = bd.getPropertyValues();
 		
 		if (pvlist == null || pvlist.isEmpty()) {
@@ -91,6 +92,27 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
 			throw new BeanCreationException("Failed to obtain BeanInfo for class [" + bd.getBeanClassName() + "]");
 		}
 	}
+	
+	//用BeanUtils实现TypeConverter的功能
+/*	private void populateBean(BeanDefinition bd, Object bean) {
+		List<PropertyValue> pvList = bd.getPropertyValues();
+		if (pvList == null || pvList.isEmpty()) {
+			return;
+		}
+		
+		BeanDefinitionValueResolver vauleResolver = new BeanDefinitionValueResolver(this);
+		try {
+			for (PropertyValue pv : pvList) {
+				String propertyName = pv.getName();
+				Object originalValue = pv.getValue();
+				
+				Object resolvedValue = vauleResolver.resolverValueIfNecessary(originalValue);
+				BeanUtils.setProperty(bean, propertyName, resolvedValue);
+			}
+		} catch(Exception e) {
+			throw new BeanCreationException("Populate bean property failed for [" + bd.getBeanClassName() + "]");
+		}
+	}*/
 	
 	@Override
 	public BeanDefinition getBeanDefinition(String beanId) {
