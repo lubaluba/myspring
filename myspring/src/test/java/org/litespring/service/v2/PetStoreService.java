@@ -1,8 +1,6 @@
 package org.litespring.service.v2;
-
-import org.litespring.dao.AccountDao;
-import org.litespring.dao.ItemDao;
-
+import org.litespring.dao.v2.AccountDao;
+import org.litespring.dao.v2.ItemDao;
 public class PetStoreService {
 
 	private AccountDao accountDao;

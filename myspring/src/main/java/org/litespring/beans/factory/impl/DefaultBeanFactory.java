@@ -52,13 +52,18 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
 		return bean;
 	}
 	private Object instantiateBean(BeanDefinition bd) {
-		ClassLoader cl = this.getBeanClassLoader();
-		String beanClassName = bd.getBeanClassName();
-		try {
-			Class<?> clazz = cl.loadClass(beanClassName);
-			return clazz.newInstance();
-		} catch (Exception e) {
-			throw new BeanCreationException("create bean for " + beanClassName + " failed",e);
+		if (bd.hasConstructorArgumentValues()) {
+			ConstructorResolver resolver = new ConstructorResolver(this);
+			return resolver.autowireConstructor(bd);
+		} else {
+			ClassLoader cl = this.getBeanClassLoader();
+			String beanClassName = bd.getBeanClassName();
+			try {
+				Class<?> clazz = cl.loadClass(beanClassName);
+				return clazz.newInstance();
+			} catch (Exception e) {
+				throw new BeanCreationException("create bean for " + beanClassName + " failed",e);
+			}
 		}
 	}
 	private void populateBean(BeanDefinition bd, Object bean) {

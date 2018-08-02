@@ -8,6 +8,7 @@ import org.dom4j.Document;
 import org.dom4j.Element;
 import org.dom4j.io.SAXReader;
 import org.litespring.beans.BeanDefinition;
+import org.litespring.beans.ConstructorArgument;
 import org.litespring.beans.PropertyValue;
 import org.litespring.beans.factory.config.RuntimeBeanReference;
 import org.litespring.beans.factory.config.TypedStringValue;
@@ -32,11 +33,15 @@ public class XmlBeanDefinitionReader {
 	
 	public static final String REF_ATTRUBUTE = "ref";
 	
-	public static final String PROPERTY_ATTRUBUTE = "property";
+	public static final String PROPERTY_ELEMENT = "property";
 	
 	public static final String VALUE_ATTRUBUTE = "value";
 	
 	public static final String NAME_ATTRUBUTE = "name"; 
+	
+	public static final String CONSTRUCTOR_ARG_ELEMENT = "constructor-arg";
+	
+	public static final String TYPE_ATTRUBUTE = "type";
 	
 	private BeanDefinitionRegisty registy;
 	
@@ -46,6 +51,7 @@ public class XmlBeanDefinitionReader {
 		this.registy = registy;
 	}
 	public void loadBeanDefinitions(Resource r) {
+		
 		try (InputStream in = r.getInputStream()) {
 			
 			SAXReader reader = new SAXReader();
@@ -60,6 +66,7 @@ public class XmlBeanDefinitionReader {
 				if(ele.attribute(SCOPE_ATTRUBUTE) != null) {
 					bd.setScope(ele.attributeValue(SCOPE_ATTRUBUTE));
 				}
+				parseConstructorArgElements(ele, bd);
 				parsePropertyElement(ele, bd);
 				this.registy.registerBeanDefinition(id, bd);
 			}
@@ -70,7 +77,7 @@ public class XmlBeanDefinitionReader {
 	}
 	//解析<property>创建PropertyValue并设置BeanDefition的list<PropertyValue>
 	public void parsePropertyElement(Element beanElement, BeanDefinition bd) {
-		Iterator<Element> iterator = beanElement.elementIterator(PROPERTY_ATTRUBUTE);
+		Iterator<Element> iterator = beanElement.elementIterator(PROPERTY_ELEMENT);
 		while (iterator.hasNext()) {
 			Element propEle = iterator.next();
 			String propertyName = propEle.attributeValue(NAME_ATTRUBUTE);
@@ -107,6 +114,29 @@ public class XmlBeanDefinitionReader {
 		}
 	}
 	
+	public void parseConstructorArgElements(Element beanEle, BeanDefinition bd) {
+		
+		Iterator<Element> iter = beanEle.elementIterator(CONSTRUCTOR_ARG_ELEMENT);
+		while (iter.hasNext()) {
+			Element ele = iter.next();
+			parseConstructorArgElement(ele, bd);
+		}
+	}
 	
-	
+	public void parseConstructorArgElement(Element ele, BeanDefinition bd) {
+		
+		String typeAttr = ele.attributeValue(TYPE_ATTRUBUTE);
+		String nameAttr = ele.attributeValue(NAME_ATTRUBUTE);
+		Object value = parPeopertyElement(ele, bd, null);
+		ConstructorArgument.ValueHolder valueHolder= new ConstructorArgument.ValueHolder(value);
+		if (StringUtils.hasLength(typeAttr)) {
+			valueHolder.setType(typeAttr);
+		}
+		if (StringUtils.hasLength(nameAttr)) {
+			valueHolder.setName(nameAttr);
+		}
+		
+		bd.getConstructorArgument().addArguentValue(valueHolder);
+		
+	}
 }

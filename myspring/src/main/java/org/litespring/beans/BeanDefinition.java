@@ -1,7 +1,6 @@
 package org.litespring.beans;
 
 import java.util.List;
-
 /**
  * 	@author a3325
  *	核心接口,主要用于封装的类的定义
@@ -24,4 +23,7 @@ public interface BeanDefinition {
 	String getBeanClassName();
 	 
 	List<PropertyValue> getPropertyValues();
+	ConstructorArgument getConstructorArgument();
+	String getID();
+	boolean hasConstructorArgumentValues();
 }

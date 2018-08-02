@@ -12,7 +12,7 @@ import org.litespring.beans.factory.impl.DefaultBeanFactory;
 import org.litespring.beans.factory.xml.XmlBeanDefinitionReader;
 import org.litespring.beans.impl.BeanDefinitionValueResolver;
 import org.litespring.core.io.ClassPathResource;
-import org.litespring.dao.AccountDao;
+import org.litespring.dao.v2.AccountDao;
 
 public class BeanDefinitionValueResolverTest {
 	

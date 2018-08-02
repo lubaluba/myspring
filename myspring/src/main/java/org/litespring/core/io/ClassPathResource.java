@@ -11,8 +11,8 @@ import org.litespring.utils.ClassUtils;
  */
 public class ClassPathResource implements Resource {
 
-	private String path;
-	private ClassLoader classLoader;
+	private final String path;
+	private final ClassLoader classLoader;
 	
 	public ClassPathResource(String path) {
 		this(path,(ClassLoader)null);

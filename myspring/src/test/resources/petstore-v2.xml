@@ -12,7 +12,7 @@
         <property name="iszlm" value="yes"></property>
   	</bean> 
   	
- 	<bean id="accountDao" class="org.litespring.dao.AccountDao"></bean>
+ 	<bean id="accountDao" class="org.litespring.dao.v2.AccountDao"></bean>
  	
- 	<bean id="itemDao" class="org.litespring.dao.ItemDao"></bean>
+ 	<bean id="itemDao" class="org.litespring.dao.v2.ItemDao"></bean>
 </beans>
