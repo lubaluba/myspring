@@ -15,7 +15,7 @@ public class ConstructorArgument {
 	private final List<ValueHolder> argumentValues = new LinkedList<>();
 	
 	public void addArgumentValue(Object value, String type) {
-		addArguentValue(new ValueHolder(value,type));
+		addArguentValue(new ValueHolder(value, type));
 	}
 	public void addArguentValue(ValueHolder valueHolder) {
 		this.argumentValues.add(valueHolder);

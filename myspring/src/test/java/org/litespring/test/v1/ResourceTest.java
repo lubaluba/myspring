@@ -30,7 +30,6 @@ public class ResourceTest {
 		try(InputStream in = r.getInputStream()){
 			assertNotNull(in);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

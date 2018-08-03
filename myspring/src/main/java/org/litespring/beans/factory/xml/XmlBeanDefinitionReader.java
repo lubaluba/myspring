@@ -66,8 +66,11 @@ public class XmlBeanDefinitionReader {
 				if(ele.attribute(SCOPE_ATTRUBUTE) != null) {
 					bd.setScope(ele.attributeValue(SCOPE_ATTRUBUTE));
 				}
+				//解析构造函数
 				parseConstructorArgElements(ele, bd);
+				//解析setter注入
 				parsePropertyElement(ele, bd);
+				
 				this.registy.registerBeanDefinition(id, bd);
 			}
 		} catch (Exception e) {

@@ -15,6 +15,7 @@ public class ApplicationContextTestV3 {
 	
 	@Test
 	public void testGetBeanProperty() {
+
 		ApplicationContext ctx = new ClassPathXmlApplicationContext("petstore-v3.xml");
 		PetStoreService petStore = (PetStoreService)ctx.getBean("petStore");
 		

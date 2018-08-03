@@ -9,15 +9,10 @@ import org.litespring.utils.Assert;
 
 public class FileSystemResource implements Resource{
 
-	@SuppressWarnings("unused")
-	private final String path;
 	private final File file;
-	
-	
-	
+
 	public FileSystemResource(String path) {
 		Assert.notNull(path, "Path must not be null");
-		this.path = path;
 		file = new File(path);
 	}
 

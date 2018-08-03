@@ -16,8 +16,9 @@ import org.litespring.core.io.ClassPathResource;
 import org.litespring.exception.BeanCreationException;
 import org.litespring.exception.BeanDefinitionStoreException;
 import org.litespring.service.v1.PetStoreService;
+import org.litespring.service.v1.PetStoreService1;
 
-public class BeamFactoryTest {
+public class BeanFactoryTest {
 	
 	DefaultBeanFactory factory = null;
 	XmlBeanDefinitionReader reader = null;
@@ -39,6 +40,18 @@ public class BeamFactoryTest {
 		assertNotNull(petStore);
 		PetStoreService petStore1 = (PetStoreService)factory.getBean("petStore");
 		assertTrue(petStore.equals(petStore1));
+	}
+	
+	@Test 
+	public void testGetPrototypeBean() {
+		reader.loadBeanDefinitions(new ClassPathResource("petstore-v1.xml"));
+		BeanDefinition bd =factory.getBeanDefinition("petStore1");
+		assertTrue(bd.isPrototype());
+		assertFalse(bd.isSingleton());
+		PetStoreService1 petStore11 = (PetStoreService1)factory.getBean("petStore1");
+		assertNotNull(petStore11);
+		PetStoreService1 petStore12 = (PetStoreService1)factory.getBean("petStore1");
+		assertFalse(petStore11.equals(petStore12));
 	}
 	@Test
 	public void testInvalidBean() {

@@ -1,6 +1,8 @@
 package org.litespring.service.v2;
+
 import org.litespring.dao.v2.AccountDao;
 import org.litespring.dao.v2.ItemDao;
+
 public class PetStoreService {
 
 	private AccountDao accountDao;
@@ -8,7 +10,7 @@ public class PetStoreService {
 	private String owner;
 	private int version;
 	private boolean iszlm;
-
+	
 	public boolean isIszlm() {
 		return iszlm;
 	}
