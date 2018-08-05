@@ -14,6 +14,7 @@ import org.litespring.beans.factory.config.RuntimeBeanReference;
 import org.litespring.beans.factory.config.TypedStringValue;
 import org.litespring.beans.factory.impl.BeanDefinitionRegisty;
 import org.litespring.beans.impl.GenericBeanDefinition;
+import org.litespring.context.annotation.ClassPathBeanDefinitionScanner;
 import org.litespring.core.io.Resource;
 import org.litespring.exception.BeanDefinitionStoreException;
 import org.litespring.utils.StringUtils;
@@ -43,6 +44,13 @@ public class XmlBeanDefinitionReader {
 	
 	public static final String TYPE_ATTRUBUTE = "type";
 	
+	public static final String BEANS_NAMESPACE_URI = "http://www.springframework.org/schema/beans";
+
+	public static final String CONTEXT_NAMESPACE_URI = "http://www.springframework.org/schema/context";
+	
+	public static final String BASE_PACKAGE_ATTRIBUTE = "base-package";
+	
+	
 	private BeanDefinitionRegisty registy;
 	
 	protected final Log logger = LogFactory.getLog(getClass());
@@ -60,18 +68,12 @@ public class XmlBeanDefinitionReader {
 			Iterator<Element> iter = root.elementIterator();
 			while (iter.hasNext()) {
 				Element ele  = iter.next();
-				String id = ele.attributeValue(ID_ATTRIBUTE);
-				String beanClassName = ele.attributeValue(CLASS_ATTRIBUTE);
-				BeanDefinition bd = new GenericBeanDefinition(id, beanClassName);
-				if(ele.attribute(SCOPE_ATTRUBUTE) != null) {
-					bd.setScope(ele.attributeValue(SCOPE_ATTRUBUTE));
+				String namespaceUri = ele.getNamespaceURI();
+				if (this.isDefaultNameSpace(namespaceUri)) {
+					parseDefaultElement(ele);
+				} else if (this.isContextNameSpace(namespaceUri)) {
+					parseComponentElement(ele);
 				}
-				//解析构造函数
-				parseConstructorArgElements(ele, bd);
-				//解析setter注入
-				parsePropertyElement(ele, bd);
-				
-				this.registy.registerBeanDefinition(id, bd);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -93,6 +95,33 @@ public class XmlBeanDefinitionReader {
 			PropertyValue pv = new PropertyValue(propertyName, val);
 			bd.getPropertyValues().add(pv);
 		}
+	}
+	
+	private void parseDefaultElement(Element ele) {
+		String id = ele.attributeValue(ID_ATTRIBUTE);
+		String beanClassName = ele.attributeValue(CLASS_ATTRIBUTE);
+		BeanDefinition bd = new GenericBeanDefinition(id, beanClassName);
+		if(ele.attribute(SCOPE_ATTRUBUTE) != null) {
+			bd.setScope(ele.attributeValue(SCOPE_ATTRUBUTE));
+		}
+		//解析构造函数
+		parseConstructorArgElements(ele, bd);
+		//解析setter注入
+		parsePropertyElement(ele, bd);
+		
+		this.registy.registerBeanDefinition(id, bd);
+	}
+	private void parseComponentElement(Element ele) {
+		String basePackages = ele.attributeValue(BASE_PACKAGE_ATTRIBUTE);
+		ClassPathBeanDefinitionScanner scanner = new ClassPathBeanDefinitionScanner(registy);
+		scanner.doScan(basePackages);
+	}
+	
+	public boolean isDefaultNameSpace(String namespaceUri) {
+		return (!StringUtils.hasLength(namespaceUri) || BEANS_NAMESPACE_URI.equals(namespaceUri));
+	}
+	public boolean isContextNameSpace(String namespaceUri) {
+		return (!StringUtils.hasLength(namespaceUri) || CONTEXT_NAMESPACE_URI.equals(namespaceUri));
 	}
 	
 	private Object parPeopertyElement(Element ele, BeanDefinition bd, String propertyName) {

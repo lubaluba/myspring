@@ -8,11 +8,23 @@ import java.util.Map;
  *		该方法先获得当前线程的类加载器,如果为空就去拿当前类的类加载,如果还没拿到就去拿根加载器(bootstarp ClassLoader)
  */
 public abstract class ClassUtils {
+	/** The package separator character: '.' */
+	private static final char PACKAGE_SEPARATOR = '.';
+
+	/** The path separator character: '/' */
+	private static final char PATH_SEPARATOR = '/';
+	
+	/** The inner class separator character: '$' */
+	private static final char INNER_CLASS_SEPARATOR = '$';
+
+	/** The CGLIB class separator: "$$" */
+	public static final String CGLIB_CLASS_SEPARATOR = "$$";
 	/**
 	 * Map with primitive wrapper type as key and corresponding primitive
 	 * type as value, for example: Integer.class -> int.class.
 	 */
 	private static final Map<Class<?>, Class<?>> wrapperToPrimitiveTypeMap = new HashMap<Class<?>, Class<?>>(8);
+
 	/**
 	 * Map with primitive type as key and corresponding wrapper
 	 * type as value, for example: int.class -> Integer.class.
@@ -31,10 +43,12 @@ public abstract class ClassUtils {
 
 		for (Map.Entry<Class<?>, Class<?>> entry : wrapperToPrimitiveTypeMap.entrySet()) {
 			primitiveTypeToWrapperMap.put(entry.getValue(), entry.getKey());
+			
 		}
 
 	}
 
+	
 	public static ClassLoader getDefaultClassLoader() {
 		ClassLoader cl = null;
 		try {
@@ -81,6 +95,25 @@ public abstract class ClassUtils {
 			}
 		}
 		return false;
+	}
+	
+	public static String convertResourcePathToClassName(String resourcePath) {
+		Assert.notNull(resourcePath, "Resource path must not be null");
+		return resourcePath.replace(PATH_SEPARATOR, PACKAGE_SEPARATOR);
+	}
+	public static String convertClassNameToResourcePath(String className) {
+		Assert.notNull(className, "Class name must not be null");
+		return className.replace(PACKAGE_SEPARATOR, PATH_SEPARATOR);
+	}
+	public static String getShortName(String className) {
+		int lastDotIndex = className.lastIndexOf(PACKAGE_SEPARATOR);
+		int nameEndIndex = className.indexOf(CGLIB_CLASS_SEPARATOR);
+		if (nameEndIndex == -1) {
+			nameEndIndex = className.length();
+		}
+		String shortName = className.substring(lastDotIndex + 1, nameEndIndex);
+		shortName = shortName.replace(INNER_CLASS_SEPARATOR, PACKAGE_SEPARATOR);
+		return shortName;
 	}
 
 }
