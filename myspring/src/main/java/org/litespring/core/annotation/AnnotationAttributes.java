@@ -17,11 +17,6 @@ public class AnnotationAttributes extends LinkedHashMap<String, Object> {
 	public AnnotationAttributes() {
 	}
 
-	/**
-	 * Create a new, empty {@link AnnotationAttributes} instance with the given initial
-	 * capacity to optimize performance.
-	 * @param initialCapacity initial size of the underlying map
-	 */
 	public AnnotationAttributes(int initialCapacity) {
 		super(initialCapacity);
 	}

@@ -15,10 +15,10 @@ import org.litespring.core.type.classreading.ClassMetadataReadingVisitor;
 import org.springframework.asm.ClassReader;
 
 public class ClassReaderTest {
-	
-	
+
 	ClassPathResource resource;
 	ClassReader reader;
+	
 	@Before
 	public void setUp() throws IOException {
 		resource = new ClassPathResource("org/litespring/service/v4/PetStoreService.class");

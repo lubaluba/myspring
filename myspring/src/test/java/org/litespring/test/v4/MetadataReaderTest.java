@@ -18,6 +18,7 @@ public class MetadataReaderTest {
 	
 	@Test
 	public void testGetMetadata() throws IOException {
+		
 		ClassPathResource resource = new ClassPathResource("org/litespring/service/v4/PetStoreService.class");
 		
 		MetadataReader reader = new SimpleMetadataReader(resource);

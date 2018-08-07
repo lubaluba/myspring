@@ -18,4 +18,5 @@ import java.lang.annotation.Target;
 public @interface Component {
 
 	String value() default "";
+	String name()  default "";
 }

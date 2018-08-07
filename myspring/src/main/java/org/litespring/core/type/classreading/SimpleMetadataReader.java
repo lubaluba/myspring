@@ -7,7 +7,11 @@ import java.io.InputStream;
 import org.litespring.core.io.Resource;
 import org.litespring.core.type.ClassMetadata;
 import org.springframework.asm.ClassReader;
-
+/**
+ *	实现MetadataReader,通过组合来隐藏具体的asm读取类的过程
+ *	只要最后返回信息即可。	
+ *	接收一个Resource即一个类,然后将这个类解析,获得类和类上注解的详细信息。
+ */
 public class SimpleMetadataReader implements MetadataReader{
 
 	private final Resource resource;

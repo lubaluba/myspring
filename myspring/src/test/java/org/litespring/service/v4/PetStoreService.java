@@ -5,7 +5,7 @@ import org.litespring.dao.v4.ItemDao;
 import org.litespring.stereotype.Autowired;
 import org.litespring.stereotype.Component;
 
-@Component(value="petStore")
+@Component(value= "petStore")
 public class PetStoreService {
 	@Autowired
 	private AccountDao accountDao;

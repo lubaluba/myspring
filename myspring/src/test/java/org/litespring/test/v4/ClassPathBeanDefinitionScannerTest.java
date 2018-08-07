@@ -50,6 +50,7 @@ public class ClassPathBeanDefinitionScannerTest {
 			
 		}
 	}
+	
 	public void doSomething(String beanName) {
 		bd = factory.getBeanDefinition(beanName);
 		sbd = (ScannedGenericBeanDefinition)bd;

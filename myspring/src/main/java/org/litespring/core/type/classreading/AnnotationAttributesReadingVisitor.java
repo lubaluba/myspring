@@ -5,7 +5,9 @@ import java.util.Map;
 import org.litespring.core.annotation.AnnotationAttributes;
 import org.springframework.asm.AnnotationVisitor;
 import org.springframework.asm.SpringAsmInfo;
-
+/**
+ *	继承自ASM的AnnotationVisitor,该是当读取到注解之后,就会来反复读取该类,直到将注解属性读取完。
+ */
 public class AnnotationAttributesReadingVisitor extends AnnotationVisitor {
 	
 	private final String annotationType;

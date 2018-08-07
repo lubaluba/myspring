@@ -6,9 +6,10 @@ import org.springframework.asm.ClassVisitor;
 import org.springframework.asm.Opcodes;
 import org.springframework.asm.SpringAsmInfo;
 /**
- * 	@author a3325 zlm
  * 	该类继承至asm的ClassVisitor,是一个visitor类
- * 	该类主要是交给
+ * 	
+ * 	该类主要供ClassRader调用,当其读取class文件读到类信息时,
+ * 	就调用该类的visitor方法,来拜访类的信息,从而让调用者得知一些类的信息,比如是否抽象,是否接口等
  */
 public class ClassMetadataReadingVisitor extends ClassVisitor 
 	implements ClassMetadata {
@@ -27,13 +28,12 @@ public class ClassMetadataReadingVisitor extends ClassVisitor
 		super(SpringAsmInfo.ASM_VERSION);
 	}
 	
-	/*
+	/**
 	 * version:class文件编译的版本号, 
 	 * access:权限修饰符,以及判断该类的类型(抽象,接口等)
 	 * name:class的资源路径形式name,如dao/itemDao
 	 * supername:父类名+资源路径
 	 * interfaces:实现的接口名
-	 * 
 	*/
 	@Override
 	public void visit(int version, int access, String name, String arg3, String supername, String[] interfaces) {

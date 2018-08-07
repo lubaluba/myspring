@@ -39,9 +39,9 @@ public class ClassPathBeanDefinitionScanner {
 		
 		String[] basePackages = StringUtils.tokenizeToStringArray(packagesToScan, ",");
 		Set<BeanDefinition> beanDefinitions = new LinkedHashSet<>();
-		for(String basePackage : basePackages) {
+		for (String basePackage : basePackages) {
 			Set<BeanDefinition> candidates = findCandidateComponets(basePackage);
-			for(BeanDefinition candidate : candidates) {
+			for (BeanDefinition candidate : candidates) {
 				beanDefinitions.add(candidate);
 				registy.registerBeanDefinition(candidate.getID(), candidate);
 			}

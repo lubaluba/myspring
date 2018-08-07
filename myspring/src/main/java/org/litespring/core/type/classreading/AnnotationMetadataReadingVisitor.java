@@ -8,7 +8,13 @@ import java.util.Set;
 import org.litespring.core.annotation.AnnotationAttributes;
 import org.springframework.asm.AnnotationVisitor;
 import org.springframework.asm.Type;
-
+/**
+ *	继承至ClassMetadataReadingVisitor,该类主要是用于拜访类上的注解
+ *	对注解进行解析,得到注解的类型和注解的属性。
+ *	ClassReader每次读取到注解时,就调用该类的visitAnnotation;
+ *	
+ *	由于该类还继承了ClassMetadataReadingVistor,所以通过该类能直接使用父类的visitor获取类的信息
+ */
 public class AnnotationMetadataReadingVisitor extends ClassMetadataReadingVisitor 
 	implements AnnotationMetadata {
 	
@@ -20,7 +26,6 @@ public class AnnotationMetadataReadingVisitor extends ClassMetadataReadingVisito
 	//desc:注解的详情,就是具体的注解类
 	@Override
 	public AnnotationVisitor visitAnnotation(String desc, boolean visible) {
-		
 		String className = Type.getType(desc).getClassName();
 		this.annotationTypeSet.add(className);
 		return new AnnotationAttributesReadingVisitor(className, this.attributeMap);

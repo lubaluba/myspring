@@ -12,7 +12,13 @@ public interface MetadataReader {
 	
 	Resource getResource();
 	
+	/**
+	 * @return 返回类的信息
+	 */
 	ClassMetadata getClassMetada();
 	
+	/**
+	 * @return 返回属性的信息
+	 */
 	AnnotationMetadata getAnnotationMetadata();
 }

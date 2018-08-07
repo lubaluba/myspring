@@ -5,49 +5,44 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 import org.litespring.beans.BeanDefinition;
-import org.litespring.beans.factory.impl.DefaultBeanFactory;
-import org.litespring.beans.factory.xml.XmlBeanDefinitionReader;
 import org.litespring.context.annotation.ScannedGenericBeanDefinition;
 import org.litespring.core.annotation.AnnotationAttributes;
-import org.litespring.core.io.ClassPathResource;
-import org.litespring.core.io.Resource;
 import org.litespring.core.type.classreading.AnnotationMetadata;
 import org.litespring.stereotype.Component;
 
-public class XmlBeanDefinitionReaderTest {
+public class XmlBeanDefinitionReaderTest  extends TestInitialize {
 
+	BeanDefinition bd;
+	ScannedGenericBeanDefinition sbd;
+	AnnotationMetadata amd;
 	@Test
 	public void testParseScanedBean () {
 		
-		DefaultBeanFactory factory = new DefaultBeanFactory();
-		XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(factory);
-		Resource resource = new ClassPathResource("petStore-v4.xml");
-		reader.loadBeanDefinitions(resource);
+		initFactory();
 		String annotation = Component.class.getName();
 		
 		{
-			BeanDefinition bd = factory.getBeanDefinition("petStore");
+			doSomething("petStore");
 			assertTrue(bd instanceof ScannedGenericBeanDefinition);	
-			ScannedGenericBeanDefinition sbd = (ScannedGenericBeanDefinition)bd;
-			AnnotationMetadata amd = sbd.getMetadata();
-			
 			assertTrue(amd.hasAnnotation(annotation));
 			AnnotationAttributes attributes = amd.getAnnotationAttributes(annotation);
 			assertEquals("petStore", attributes.get("value"));
 		}
 		{
-			BeanDefinition bd = factory.getBeanDefinition("accountDao");
+			doSomething("accountDao");
 			assertTrue(bd instanceof ScannedGenericBeanDefinition);	
-			ScannedGenericBeanDefinition sbd = (ScannedGenericBeanDefinition)bd;
-			AnnotationMetadata amd = sbd.getMetadata();
 			assertTrue(amd.hasAnnotation(annotation));
 		}
 		{
-			BeanDefinition bd = factory.getBeanDefinition("itemDao");
+			doSomething("itemDao");
 			assertTrue(bd instanceof ScannedGenericBeanDefinition);	
-			ScannedGenericBeanDefinition sbd = (ScannedGenericBeanDefinition)bd;
-			AnnotationMetadata amd = sbd.getMetadata();
 			assertTrue(amd.hasAnnotation(annotation));
 		}
+		
+	}
+	private void doSomething(String beanName) {
+		bd = factory.getBeanDefinition(beanName);
+		sbd = (ScannedGenericBeanDefinition)bd;
+		amd = sbd.getMetadata();
 	}
 }

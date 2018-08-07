@@ -13,7 +13,9 @@ import org.litespring.core.io.FileSystemResource;
 import org.litespring.core.io.Resource;
 import org.litespring.utils.Assert;
 import org.litespring.utils.ClassUtils;
-
+/**
+ * 	接收一个String类型的包名,将package下面的class变成Resource
+ */
 public class PackageResourceLoader {
 	
 	private  static final Log logger = LogFactory.getLog(PackageResourceLoader.class);
@@ -33,7 +35,10 @@ public class PackageResourceLoader {
 	
 	public Resource[] getResources(String basePackage) throws IOException {
 		Assert.notNull(basePackage, "basePackage must not be null");
+		
+		//将包名转换为路径
 		String location = ClassUtils.convertClassNameToResourcePath(basePackage);
+		
 		ClassLoader cl = getClassLoader();
 		URL url = cl.getResource(location);
 		File rootDir = new File(url.getFile());
@@ -47,6 +52,7 @@ public class PackageResourceLoader {
 		return result;
 	}
 	
+	//检验包是否合理
 	protected Set<File> retrieveMatchingFiles(File rootDir) throws IOException {
 		if (!rootDir.exists()) {
 			if (logger.isDebugEnabled()) {
@@ -74,11 +80,13 @@ public class PackageResourceLoader {
 		 * fullPattern = fullPattern + StringUtils.replace(pattern, File.separator, "/"); 
 		 */
 		
-		Set<File> result = new LinkedHashSet<>(8);
+		Set<File> result = new LinkedHashSet<>();
 		doRetrieveMatchingFiles(rootDir, result);
 		return result;
 	}
-protected void doRetrieveMatchingFiles( File dir, Set<File> result) throws IOException {
+	
+	//递归找到路径下所有的class文件
+	protected void doRetrieveMatchingFiles( File dir, Set<File> result) throws IOException {
 		
 		File[] dirContents = dir.listFiles();
 		if (dirContents == null) {
