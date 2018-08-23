@@ -6,6 +6,7 @@ import org.litespring.beans.factory.impl.DefaultBeanFactory;
 import org.litespring.beans.factory.xml.XmlBeanDefinitionReader;
 import org.litespring.context.ApplicationContext;
 import org.litespring.core.io.Resource;
+import org.litespring.exception.NoSuchBeanDefinitionException;
 import org.litespring.utils.ClassUtils;
 
 public abstract class AbstractApplicationContext implements ApplicationContext {
@@ -43,4 +44,7 @@ public abstract class AbstractApplicationContext implements ApplicationContext {
 		beanFactory.addBeanPostProcessor(postProcessor);
 	}
 	
+	public Class<?> getType(String name) throws NoSuchBeanDefinitionException {
+		return this.factory.getType(name);
+	}
 }
