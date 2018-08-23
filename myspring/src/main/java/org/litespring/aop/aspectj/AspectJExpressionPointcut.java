@@ -14,7 +14,9 @@ import org.litespring.aop.MethodMatcher;
 import org.litespring.aop.Pointcut;
 import org.litespring.utils.ClassUtils;
 import org.litespring.utils.StringUtils;
-
+/**
+ *	该类主要用于通过切点语言(expression)来拦截指定的方法
+ */
 public class AspectJExpressionPointcut implements Pointcut, MethodMatcher {
 
 	private static final Set<PointcutPrimitive> SUPPORTED_PRIMITIVES = new HashSet<PointcutPrimitive>();
@@ -57,6 +59,7 @@ public class AspectJExpressionPointcut implements Pointcut, MethodMatcher {
 		
 		return false;
 	}
+	
 	@Override
 	public MethodMatcher getMethodMatcher() {
 		
@@ -85,6 +88,7 @@ public class AspectJExpressionPointcut implements Pointcut, MethodMatcher {
 		return shadowMatch;
 	}
 	
+	//将表达式注册成一个PointcutExpression类
 	private void checkReadyToMatch() {
 		if (getExpression() == null) {
 			throw new IllegalStateException("Must set property 'expression' before attempting to match");
@@ -119,11 +123,12 @@ public class AspectJExpressionPointcut implements Pointcut, MethodMatcher {
 	
 	@Override
 	public String getExpression() {
-		
+
 		return this.expression;
 	}
 	
 	public void setExpression(String expression){
+		
 		this.expression = expression;
 	}
 	

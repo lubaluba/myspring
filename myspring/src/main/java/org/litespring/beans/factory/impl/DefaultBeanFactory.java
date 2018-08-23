@@ -17,6 +17,7 @@ import org.litespring.beans.factory.config.InstantiationAwareBeanPostProcessor;
 import org.litespring.beans.impl.BeanDefinitionValueResolver;
 import org.litespring.beans.impl.SimpleTypeConverter;
 import org.litespring.exception.BeanCreationException;
+import org.litespring.exception.NoSuchBeanDefinitionException;
 import org.litespring.utils.ClassUtils;
 /**
  *  @author a3325
@@ -186,5 +187,15 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
 	@Override
 	public List<BeanPostProcessor> getBeanPostProcessors() {
 		return this.beanPostProcessors;
+	}
+	
+	@Override
+	 public Class<?> getType(String name) throws NoSuchBeanDefinitionException {
+		BeanDefinition bd = this.getBeanDefinition(name);
+		if(bd == null){
+			throw new NoSuchBeanDefinitionException(name);
+		}
+		resolveBeanClass(bd);		
+		return bd.getBeanClass();
 	}
 }

@@ -13,7 +13,7 @@ import org.litespring.service.v5.PetStoreService;
 public class PonintcutTest {
 	
 	@Test
-	public void testPonintcut() throws Exception	 {
+	public void testPonintcut() throws Exception {
 		String expression = "execution(* org.litespring.service.v5.*.placeOrder(..))";
 		AspectJExpressionPointcut pc = new AspectJExpressionPointcut();
 		pc.setExpression(expression);
