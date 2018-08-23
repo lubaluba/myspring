@@ -47,9 +47,12 @@
    			<artifactId>aspectjweaver</artifactId>
    	 		<version>1.9.1</version>
 		</dependency>
-		
+		<!-- aop -->
+		<dependency>
+    		<groupId>aopalliance</groupId>
+   	 		<artifactId>aopalliance</artifactId>
+    		<version>1.0</version>
+		</dependency>
 		
   	</dependencies>
-  	
-  	
 </project>
