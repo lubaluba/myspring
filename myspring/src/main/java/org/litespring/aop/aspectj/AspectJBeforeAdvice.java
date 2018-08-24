@@ -15,7 +15,8 @@ public class AspectJBeforeAdvice extends AbstractAspectJAdvice {
 	/**
 	 * 	通过传入方法拦截器来调用方法
 	 *	在本次的代码中也就是调用TransactionManager的方法,如start/commit等
-	 *	
+	 *	注意方法的调用顺序,作为before方法,this.invokeAdviceMethod()先调用Advice
+	 *	然后proceed()去看是否还有其他methodIntercptor,没有就执行目标方法。
 	 */
 	public Object invoke(MethodInvocation mi) throws Throwable {
 		this.invokeAdviceMethod();

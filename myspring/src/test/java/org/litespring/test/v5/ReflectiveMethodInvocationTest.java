@@ -50,7 +50,6 @@ public class ReflectiveMethodInvocationTest {
 		interceptors.add(afterAdvice);	
 		
 		ReflectiveMethodInvocation mi = new ReflectiveMethodInvocation(petStoreService, targetMethod, new Object[0], interceptors);
-		
 		mi.proceed();
 		
 		List<String> msgs = MessageTracker.getMsgs();
@@ -89,7 +88,8 @@ public class ReflectiveMethodInvocationTest {
 		List<MethodInterceptor> interceptors = new ArrayList<MethodInterceptor>();
 		interceptors.add(afterThrowingAdvice);	
 		interceptors.add(beforeAdvice);
-			
+		interceptors.add(afterAdvice);
+		
 		ReflectiveMethodInvocation mi = new ReflectiveMethodInvocation(petStoreService,targetMethod,new Object[0],interceptors);
 		try {
 			mi.proceed();		

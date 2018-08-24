@@ -36,5 +36,6 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/spring-core-asm-3.2.18.RELEASE.jar" sourcepath="C:/Users/a3325/Desktop/study/javalib/web框架/spring-framework-5.0.5.zip"/>
+	<classpathentry kind="lib" path="lib/spring-core-cglib-3.2.18.RELEASE.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

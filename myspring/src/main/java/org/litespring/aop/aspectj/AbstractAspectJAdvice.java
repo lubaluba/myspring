@@ -23,7 +23,7 @@ public abstract class AbstractAspectJAdvice implements Advice {
 		this.pointcut = pointcut;
 		this.adviceObject = adviceObject;
 	}
-		
+	
 	public void invokeAdviceMethod() throws  Throwable{
 		adviceMethod.invoke(adviceObject);
 	}
