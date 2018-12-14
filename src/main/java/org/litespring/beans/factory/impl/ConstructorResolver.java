@@ -13,7 +13,9 @@ import org.litespring.beans.factory.config.ConfigurableBeanFactory;
 import org.litespring.beans.impl.BeanDefinitionValueResolver;
 import org.litespring.beans.impl.SimpleTypeConverter;
 import org.litespring.exception.BeanCreationException;
-
+/**
+ *	该类主要是用于找到正确的构造函数,并通过该构造函数创建对象
+ */
 public class ConstructorResolver {
  
 	protected final Log logger = LogFactory.getLog(getClass());

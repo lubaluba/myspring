@@ -5,7 +5,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.litespring.beans.factory.config.SingletonBeanRegistry;
 import org.litespring.utils.Assert;
 /**
- * 	@author a3325
  * 	DefaultBeanFactory的实现类,主要是是给DefaultBeanFactory提供服务,让其可以获取singleton的class
  */
 public class DefaultSingletonBeanRegistry implements SingletonBeanRegistry {

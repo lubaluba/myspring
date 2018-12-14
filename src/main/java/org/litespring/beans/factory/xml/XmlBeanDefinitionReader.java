@@ -19,7 +19,6 @@ import org.litespring.core.io.Resource;
 import org.litespring.exception.BeanDefinitionStoreException;
 import org.litespring.utils.StringUtils;
 /**
- * 	@author a3325
  *	解析xml文件来获取BeanDefinition对象的类
  *	该类解析xml后依赖BeanDefinitionRegisty接口来注册BeanDefinition对象,并提供给BeanFactory
  */
@@ -50,7 +49,6 @@ public class XmlBeanDefinitionReader {
 	
 	public static final String BASE_PACKAGE_ATTRIBUTE = "base-package";
 	
-	
 	private BeanDefinitionRegisty registy;
 	
 	protected final Log logger = LogFactory.getLog(getClass());
@@ -58,10 +56,10 @@ public class XmlBeanDefinitionReader {
 	public XmlBeanDefinitionReader(BeanDefinitionRegisty registy) {
 		this.registy = registy;
 	}
+	
 	public void loadBeanDefinitions(Resource r) {
 		
 		try (InputStream in = r.getInputStream()) {
-			
 			SAXReader reader = new SAXReader();
 			Document doc = reader.read(in);
 			Element root  = doc.getRootElement();
@@ -125,7 +123,7 @@ public class XmlBeanDefinitionReader {
 	}
 	
 	private Object parPeopertyElement(Element ele, BeanDefinition bd, String propertyName) {
-		String elementName = (propertyName != null)?"<property> element for property '" + propertyName + "'":
+		String elementName = (propertyName != null) ? "<property> element for property '" + propertyName + "'":
 			"<constructor-arg> element";
 		
 		boolean hasRefAttribute = (ele.attribute(REF_ATTRUBUTE) != null);
@@ -141,6 +139,7 @@ public class XmlBeanDefinitionReader {
 		} else if (hasValueAttrubute) {
 			TypedStringValue valueHolder = new TypedStringValue(ele.attributeValue(VALUE_ATTRUBUTE));
 			return valueHolder;
+			//TODO 后面还支持list,set,arry等属性
 		} else {
 			throw new RuntimeException(elementName + "must specify a ref or a value");
 		}

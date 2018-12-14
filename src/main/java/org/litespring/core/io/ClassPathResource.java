@@ -6,7 +6,6 @@ import java.io.InputStream;
 
 import org.litespring.utils.ClassUtils;
 /**
- * 	@author a3325
  *	Resource的实现类,根据文件的classPath来获取资源
  */
 public class ClassPathResource implements Resource {
@@ -15,7 +14,7 @@ public class ClassPathResource implements Resource {
 	private final ClassLoader classLoader;
 	
 	public ClassPathResource(String path) {
-		this(path,(ClassLoader)null);
+		this(path, (ClassLoader)null);
 	}
 	public ClassPathResource(String path, ClassLoader classLoader) {
 		this.path = path;
@@ -35,5 +34,5 @@ public class ClassPathResource implements Resource {
 	public String getDescription() {
 		return this.path;
 	}
-
+	
 }

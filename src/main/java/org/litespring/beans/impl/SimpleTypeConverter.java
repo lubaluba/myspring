@@ -9,7 +9,6 @@ import org.litespring.beans.propertyeditors.CustomNumberEditor;
 import org.litespring.exception.TypeMismatchException;
 import org.litespring.utils.ClassUtils;
 /**
- * 	@author a3325
  *	这是一个类型解析类,主要用于解析基本数据类型以及基本数据类型的包装类
  */
 public class SimpleTypeConverter implements TypeConverter {

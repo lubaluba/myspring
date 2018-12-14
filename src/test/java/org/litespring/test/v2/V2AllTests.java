@@ -5,11 +5,14 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ ApplicationContextTestV2.class, 
-	BeanDefinitionTestV2.class, BeanDefinitionValueResolverTest.class,
+@SuiteClasses({ 
+	ApplicationContextTestV2.class, 
+	BeanDefinitionTestV2.class, 
+	BeanDefinitionValueResolverTest.class,
 	CustomBooleanEditorTest.class, 
 	CustomNumberEditorTest.class, 
-	TypeConvertStringToInt.class })
+	TypeConvertStringToInt.class 
+	})
 public class V2AllTests {
 
 }

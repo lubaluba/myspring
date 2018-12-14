@@ -3,7 +3,10 @@ package org.litespring.beans.propertyeditors;
 import java.beans.PropertyEditorSupport;
 
 import org.litespring.utils.StringUtils;
-
+/**
+ *	将一些指定的String类型转换为boolean
+ *	如果on,yes,1等都可以转化为true
+ */
 public class CustomBooleanEditor extends PropertyEditorSupport {
 	
 	public static final String VALUE_TRUE = "true";

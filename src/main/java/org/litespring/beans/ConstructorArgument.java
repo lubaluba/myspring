@@ -4,7 +4,6 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 /**
- *  @author a3325
  *	构造器注入使用的类,用一个list来保存xml解析后需要构造器注入的参数
  *	该类使用了一个静态内部类ValueHolder来保存参数,ValueHolder的value可以是类和任意类型的变量,也就是xml中的ref和value
  *	使用ValueHolder可以很好的支持多种注入方式,比如按照参数name,按照参数的index,按照参数的type

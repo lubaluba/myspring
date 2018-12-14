@@ -20,7 +20,6 @@ import org.litespring.exception.BeanCreationException;
 import org.litespring.exception.NoSuchBeanDefinitionException;
 import org.litespring.utils.ClassUtils;
 /**
- *  @author a3325
  *	BeanFactory的具体实现类
  *	根据单一原则,它核心方法只是getBean(),但其需要很多其他类的支持来获取BeanDefiniton,ClassLoader等	 		
  */
@@ -30,6 +29,7 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
 	private List<BeanPostProcessor> beanPostProcessors = new ArrayList<>();
 	
 	private final Map<String,BeanDefinition> beanDefinitionMap = new ConcurrentHashMap<>();
+	
 	private ClassLoader beanClassLoader = null;
 	
 	@Override
@@ -73,6 +73,11 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
 			}
 		}
 	}
+	
+	/**
+	 *	该方法是在getBean()中,在bean创建好后返回之前执行的方法
+	 *	主要是将BeanDefinition的Property中的属性setter入bean中
+	 */
 	private void populateBean(BeanDefinition bd, Object bean) {
 		
 		for(BeanPostProcessor processor : this.getBeanPostProcessors()) {
@@ -85,8 +90,9 @@ public class DefaultBeanFactory extends DefaultSingletonBeanRegistry
 		if (pvlist == null || pvlist.isEmpty()) {
 			return;
 		}
-		
+		//注入ref
 		BeanDefinitionValueResolver vauleResolver = new BeanDefinitionValueResolver(this);
+		//注入value
 		SimpleTypeConverter converter = new SimpleTypeConverter();
 		
 		try {

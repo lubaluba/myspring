@@ -3,8 +3,8 @@ import org.litespring.beans.factory.BeanFactory;
 import org.litespring.beans.factory.config.RuntimeBeanReference;
 import org.litespring.beans.factory.config.TypedStringValue;
 /**
- * 	@author a3325
- * 	该类用于对PropertyValue进行解析
+ *	该类用于对BeanDifinition中的propertyValue进行解析
+ *	如,一个RuntimeBeanReference将其转换为具体的bean
  * 	将RuntimeBeanReference转换为具体的bean等
  */
 public class BeanDefinitionValueResolver {
@@ -27,7 +27,5 @@ public class BeanDefinitionValueResolver {
 			throw new RuntimeException("the value " + value + " has not implemented");
 		}
 	}
-	
-	
 }
 

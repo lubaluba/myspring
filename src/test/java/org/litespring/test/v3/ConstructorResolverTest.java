@@ -9,10 +9,7 @@ import org.litespring.beans.factory.impl.DefaultBeanFactory;
 import org.litespring.beans.factory.xml.XmlBeanDefinitionReader;
 import org.litespring.core.io.ClassPathResource;
 import org.litespring.service.v3.PetStoreService;
-/**
- * 	@author a3325
- *	该类主要是用于找到正确的构造函数,并通过该构造函数创建对象
- */
+
 public class ConstructorResolverTest {
 	
 	@Test

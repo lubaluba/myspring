@@ -1,6 +1,5 @@
 package org.litespring.beans.factory.config;
 /**
- * 	@author a3325
  * 	<bean id="xxx" class="xxx">
  * 		<property name="xxx" ref="xxx">
  * 	</bean>

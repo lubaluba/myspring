@@ -22,6 +22,12 @@ public abstract class AbstractApplicationContext implements ApplicationContext {
 		factory.setBeanClassLoader(this.getBeanClassLoader());
 		registerBeanPostProcessors(factory);
 	}
+
+	protected void registerBeanPostProcessors(ConfigurableBeanFactory beanFactory) {
+		AutowiredAnnotationProcessor postProcessor = new AutowiredAnnotationProcessor();
+		postProcessor.setBeanFactory(beanFactory);
+		beanFactory.addBeanPostProcessor(postProcessor);
+	}
 	
 	protected abstract Resource getResource(String path);
 	
@@ -36,12 +42,6 @@ public abstract class AbstractApplicationContext implements ApplicationContext {
 
 	public void setBeanClassLoader(ClassLoader beanClassLoader) {
 		this.beanClassLoader = beanClassLoader;
-	}
-	
-	protected void registerBeanPostProcessors(ConfigurableBeanFactory beanFactory) {
-		AutowiredAnnotationProcessor postProcessor = new AutowiredAnnotationProcessor();
-		postProcessor.setBeanFactory(beanFactory);
-		beanFactory.addBeanPostProcessor(postProcessor);
 	}
 	
 	public Class<?> getType(String name) throws NoSuchBeanDefinitionException {

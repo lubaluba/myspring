@@ -3,10 +3,14 @@ package org.litespring.beans.factory;
 import org.litespring.exception.NoSuchBeanDefinitionException;
 
 /**
- * 	@author a3325
  *	Bean的工厂,根据单一职责设计原则,他只需要提供唯一功能,getBean()
  */
 public interface BeanFactory {
+	
+	/**
+	 * @param xml中配置的bean的id
+	 * @return 返回一个bean的对象
+	 */
 	Object getBean(String BeanId);
 	
 	/**

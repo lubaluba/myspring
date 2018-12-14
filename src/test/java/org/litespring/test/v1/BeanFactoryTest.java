@@ -7,7 +7,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.litespring.beans.BeanDefinition;
 import org.litespring.beans.factory.impl.DefaultBeanFactory;
@@ -28,6 +27,7 @@ public class BeanFactoryTest {
 		factory = new DefaultBeanFactory();
 		reader = new XmlBeanDefinitionReader(factory);
 	}
+	
 	@Test
 	public void testGetBean() {
 		reader.loadBeanDefinitions(new ClassPathResource("petstore-v1.xml"));
@@ -40,6 +40,7 @@ public class BeanFactoryTest {
 		assertNotNull(petStore);
 		PetStoreService petStore1 = (PetStoreService)factory.getBean("petStore");
 		assertTrue(petStore.equals(petStore1));
+		assertTrue(petStore instanceof PetStoreService);
 	}
 	
 	@Test 
@@ -53,6 +54,7 @@ public class BeanFactoryTest {
 		PetStoreService1 petStore12 = (PetStoreService1)factory.getBean("petStore1");
 		assertFalse(petStore11.equals(petStore12));
 	}
+	
 	@Test
 	public void testInvalidBean() {
 		reader.loadBeanDefinitions(new ClassPathResource("petstore-v1.xml"));
@@ -63,7 +65,7 @@ public class BeanFactoryTest {
 		}
 		Assert.fail("except BeanCreationException");
 	}
-	@Ignore
+	
 	@Test
 	public void testInvalidXml() {
 		try {
